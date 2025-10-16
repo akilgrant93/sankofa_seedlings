@@ -19,7 +19,7 @@ function shuffleArray<T>(array: T[]): T[] {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
   
-      //deployment test
+      //deployment tes
       // And swap it with the current element.
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
