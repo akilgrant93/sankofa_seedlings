@@ -31,6 +31,8 @@ export function shuffleArray(array: any[]) {
 
 export const Carousel = ({ products }: Props) => {
   const [current, setCurrent] = useState<number>(0);
+  const activeProducts = products.filter(product => product.active)
+  products = shuffleArray(activeProducts)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,7 +45,6 @@ export const Carousel = ({ products }: Props) => {
   const currentProduct = products[current];
 
   const price = currentProduct.default_price as Stripe.Price;
-
   return (
     <Card className="relative overflow-hidden rounded-lg shadow-md border-gray-300">
       {currentProduct.images && currentProduct.images[0] && (
