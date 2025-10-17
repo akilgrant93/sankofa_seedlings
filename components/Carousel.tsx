@@ -4,12 +4,13 @@ import Stripe from "stripe";
 import { Card, CardContent, CardTitle } from "./ui/card";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { AnimatePresence, motion } from "motion/react"
 
 interface Props {
   products: Stripe.Product[];
 }
 
-function shuffleArray<T>(array: T[]): T[] {
+export function shuffleArray<T>(array: T[]): T[] {
     let currentIndex = array.length, randomIndex;
   
     // While there remain elements to shuffle.

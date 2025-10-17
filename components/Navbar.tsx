@@ -1,22 +1,42 @@
+"use client"
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
+import { AnimatePresence } from "motion/react"
+import * as motion from "motion/react-client"
+import "@fontsource/passion-one"
 
 const Navbar = () => {
+  const tabs = ['Home', 'Products', 'Checkout']
+  const [selectedTab, setSelectedTab] = useState(tabs[0])
+  
   return (
     <nav className='sticky top-0 z-50 bg-white shadow'>
-        <div className='container mx-auto flex items-center justify-between py-4 px-4'>
-            <Link className='text-[#285943] font-black w-full md:w-1/2' href="/">
-                Sankofa Seedlings
+        <div className='mx-auto flex items-center justify-between py-4 px-4'>
+            <Link style={{fontFamily: 'Passion One, sans-serif', fontWeight:500}} className='text-[#285943] font-black w-full md:w-1/2 text-3xl ' href="/">
+            SANKOFA SEEDLINGS
             </Link> 
             <div className='hidden md:flex justify-end space-x-6 w-full md:w-1/2'>
-                <p className='font-medium text-black hover:underline'>Find Your Hardiness Zone</p>
-                <Link className='text-[#285943] font-black hover:text-gray-600' href="/">Home</Link> 
-                <Link className='text-[#285943] font-black hover:text-gray-600' href="/products">
+                <p className='self-center text-sm font-semibold text-black hover:underline'>Find Your Hardiness Zone</p>
+                <ul className='flex space-x-6'>
+                    {tabs.map((item) => (
+                        <Link
+                            key={item}
+                            style={{fontFamily: 'Passion One, sans-serif', fontWeight:500}}
+                            href={ item === 'Home' ? '/' : `/${item.toLowerCase()}` }
+                            className={ (item === selectedTab ? 'font-black text-[#77AF9C]'  : 'text-[#285943] font-black hover:text-[#77AF9C]') + ' text-xl'}
+                            onClick={() => setSelectedTab(item)}
+                        >
+                            {`${item}`}
+                        </Link>
+                    ))}
+                </ul>
+                {/* <Link onClick={setSelectedTab(tabs[0])} className='text-[#285943] font-black hover:text-[#77AF9C]' href="/">Home</Link> 
+                <Link className='text-[#285943] font-black hover:text-[#77AF9C]' href="/products">
                     Products
                 </Link> 
-                <Link className='text-[#285943] font-black hover:text-gray-600' href="/checkout">
+                <Link className='' href="/checkout">
                     Checkout
-                </Link> 
+                </Link>  */}
                 </div>
                 <div className='flex items-center space-x-4'>{/* <Link href="/cart">Cart</Link> */}</div>
             </div>

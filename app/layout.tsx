@@ -22,7 +22,7 @@ export default function RootLayout({
         className={`flex flex-col min-h-full bg-white antialiased`}
       >
         <Navbar />
-        <main className="flex-grow container bg-white mx-auto px-4 py-8">
+        <main className="flex-grow w-full bg-white mx-auto px-4 pb-8 md:min-h-[57vh]">
         {children}
         </main>
         <Footer />

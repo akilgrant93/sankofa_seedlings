@@ -1,9 +1,15 @@
-import React from 'react'
+import ProductList from "../../components/ProductList";
+import { stripe } from "@/lib/stripe";
 
-const page = () => {
+export default async function ProductsPage() {
+  const products = await stripe.products.list({
+    expand: ["data.default_price"],
+    limit:20
+  });
+
   return (
-    <div>page</div>
-  )
+    <div className="pb-8">
+      <ProductList products={products.data} />
+    </div>
+  );
 }
-
-export default page
