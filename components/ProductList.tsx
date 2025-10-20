@@ -17,45 +17,45 @@ interface Props {
 
     const ProductList = ({ products }: Props) => {
     const [searchTerm, setSearchTerm] = useState<string>("");
-    const selections = ['Price, Low to High', 'Price, High to Low'];
-    const [selectedSort, setSelectedSort] = useState<string>(selections[0]);
+    const [selectionType, setSelectionType] = useState<string>("name");
+    const [selectionOrder, setSelectionOrder] = useState<'asc' | 'desc'>('asc');
 
-    function customStringArraySort(arr:any[]) {
-        const n = arr.length;
-        let swapped;
-  
-        do {
-            swapped = false;
-            for (let i = 0; i < n - 1; i++) {
-        // Compare adjacent elements
-                if (arr[i].default_price.unit_amount > arr[i + 1].default_price.unit_amount) {
-                // Swap them if they are in the wrong order
-                    let temp = arr[i];
-                    arr[i] = arr[i + 1];
-                    arr[i + 1] = temp;
-                    swapped = true;
-                }
+    type StripeProduct = Stripe.Product // Use the Stripe type for products
+
+    function sortProducts<T extends StripeProduct>(
+      products: T[],
+      sortBy: keyof T,
+      order: 'asc' | 'desc' = 'asc'
+    ): T[] {
+      return [...products].sort((a, b) => {
+        const valueA = a[sortBy];
+        const valueB = b[sortBy];
+
+        if (typeof valueA === 'string' && typeof valueB === 'string') {
+          return order === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+        } else if (typeof valueA === 'number' && typeof valueB === 'number') {
+          return order === 'asc' ? valueA - valueB : valueB - valueA;
+        } else {
+          // Handle other types or provide a default comparison
+          return 0;
         }
-        } while (swapped); // Continue as long as swaps are being made
-  
-        return arr;
+      });
     }
 
+  const handleSelections = (value: string) => {
+    console.log(value)
+    if(value === "Alphabetical, A-Z" || value === "Alphabetical, Z-A"){
+      setSelectionOrder(value === "Alphabetical, A-Z" ? 'asc' : 'desc')
+      setSelectionType('name')
+    }
+    else if(value === 'Price, Low to High' || value === 'Price, High to Low'){
+      setSelectionOrder(value === "Price, Low to High" ? 'asc' : 'desc')
+      setSelectionType('default_price')
+    }
+  }
 
-    const priceSort = customStringArraySort(products);   
 
-    const sortProducts = (criteria: string) => {
-        switch (criteria) {
-            case 'Price, Low to High':
-                return priceSort;
-            case 'Price, High to Low':
-                return priceSort.toReversed();
-            default:
-                return products;
-        }
-    };
-
-    const filteredProducts = sortProducts(selectedSort).filter((product) => {
+  const filteredbyName = sortProducts(products, selectionType === 'name' ? 'name' : 'default_price', selectionOrder).filter((product) => {
     const term = searchTerm.toLowerCase();
     const nameMatch = product.name.toLowerCase().includes(term);
     const descriptionMatch = product.description
@@ -66,6 +66,8 @@ interface Props {
   })
   .filter(product => product.active);
 
+
+  // console.log(filteredbyPrice)
   return (
     <div>
       <div className="my-4">
@@ -73,13 +75,15 @@ interface Props {
         <div className="w-[77.5vw] flex justify-between items-center mx-auto">
         <div className='flex items-center'>
         <p className="pr-2 text-black font-semibold">Sort By</p>
-        <Select onValueChange={(value) => setSelectedSort(value)}>
+        <Select onValueChange={(value) => handleSelections(value)}>
             <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder={selections[0]}/>
+                <SelectValue placeholder={'Alphabetical, A-Z'}/>
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="Price, Low to High">Price, Low to High</SelectItem>
-                <SelectItem value="Price, High to Low">Price, High to Low</SelectItem>
+                <SelectItem value="Alphabetical, A-Z">Alphabetical, A-Z</SelectItem>
+                <SelectItem value="Alphabetical, Z-A">Alphabetical, Z-A</SelectItem>
+                {/* <SelectItem value="Price, Low to High">Price, Low to High</SelectItem>
+                <SelectItem value="Price, High to Low">Price, High to Low</SelectItem> */}
             </SelectContent>
         </Select>
         </div>
@@ -93,8 +97,8 @@ interface Props {
         </div>
       </div>
       <div className="flex flex-col items-center justify-center md:min-h-[35vh]">
-      {filteredProducts.length  ? <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredProducts.map((product, key) => (
+      {filteredbyName.length  ? <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {filteredbyName.map((product, key) => (
           <li key={key}>
             <ProductCard product={product} />
           </li>

@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { AnimatePresence } from "motion/react"
 import * as motion from "motion/react-client"
 import "@fontsource/passion-one"
+import HardinessZoneSelector from './HardinessZoneSelector'
 
 const Navbar = () => {
   const tabs = ['Home', 'Products', 'Checkout']
@@ -15,8 +16,8 @@ const Navbar = () => {
             <Link style={{fontFamily: 'Passion One, sans-serif', fontWeight:500}} className='text-[#285943] font-black w-full md:w-1/2 text-3xl ' href="/">
             SANKOFA SEEDLINGS
             </Link> 
-            <div className='hidden md:flex justify-end space-x-6 w-full md:w-1/2'>
-                <p className='self-center text-sm font-semibold text-black hover:underline'>Find Your Hardiness Zone</p>
+            <div className='hidden md:flex justify-end items-center space-x-6 w-full md:w-1/2'>
+                <HardinessZoneSelector />
                 <ul className='flex space-x-6'>
                     {tabs.map((item) => (
                         <Link

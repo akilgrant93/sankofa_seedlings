@@ -4,7 +4,7 @@ import Stripe from "stripe";
 import { Card, CardContent, CardTitle } from "./ui/card";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "motion/react"
+import "@fontsource/passion-one"
 
 interface Props {
   products: Stripe.Product[];
@@ -58,12 +58,12 @@ export const Carousel = ({ products }: Props) => {
           />
         </div>
       )}
-      <CardContent className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50">
-        <CardTitle className="text-3xl font-bold text-white mb-2">
+      <CardContent className="absolute inset-0 flex flex-col items-center bg-black/15 justify-center">
+        <CardTitle style={{fontFamily: 'Passion One, sans-serif', fontWeight:500}} className="text-4xl font-bold text-white mb-2">
           {currentProduct.name}
         </CardTitle>
         {price && price.unit_amount && (
-          <p className="text-xl text-white">
+          <p className="text-xl font-black text-white">
             ${(price.unit_amount / 100).toFixed(2)}
           </p>
         )}
