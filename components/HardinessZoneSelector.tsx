@@ -57,14 +57,19 @@ const HardinessZoneSelector = () => {
   return (
     <Popover defaultOpen={false} open={shouldClose}>
       <PopoverTrigger asChild onClick={() => [setShouldClose(shouldClose ? false : true), setZipCodeStr(''), setIsValid(true)]}>
-        <Button variant="link" className='text-black hover:cursor-pointer'>{zone ? <motion.div initial={{ opacity: 0, x: -30 }} 
+        <Button variant="link" className='text-black hover:cursor-pointer'>
+          {zone ? 
+          <motion.div initial={{ opacity: 0, x: -30 }} 
                 animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 0.0625 }} >My Zone: {zone} - {zipToFetch}</motion.div> : 'Find Your Hardiness Zone'}</Button>
+                transition={{ duration: 0.0625 }}>
+                  My Zone: {zone} - {zipToFetch}
+          </motion.div> : 'Find Your Hardiness Zone'}
+          </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 h-46 bg-[#77AF9C] border-0  text-white shadow">
         <div className="grid gap-4">
           <div>
-            <p className="text-muted-foreground text-sm font-semibold">
+            <p className="text-muted-foreground text-sm font-thin">
               Enter your zip code to find your USDA Hardiness Zone.
             </p>
           </div>
@@ -79,14 +84,14 @@ const HardinessZoneSelector = () => {
               <div className='flex gap-2 pt-4 w-full'>
                 {/* close */}
               <button 
-                className='w-1/2 px-2 flex justify-center items-center shadow-lg rounded-md p-1 bg-[#900000] hover:bg-[#FF8585] hover:stroke-[#285943] stroke-white transition duration-300'
+                className='w-1/2 px-2 flex hover:cursor-pointer justify-center items-center shadow-lg rounded-md p-1 bg-[#900000] hover:bg-[#FF8585] hover:stroke-[#285943] stroke-white transition duration-300'
                 onClick={() => setShouldClose(false)} 
                 type='submit'>
                     <p className='text-sm'>Close</p>
               </button>
                 {/* submit */}
               <button 
-                className='w-1/2 px-2 flex justify-center items-center shadow-lg rounded-md p-1 bg-[#285943] hover:bg-[#397F5F] hover:stroke-[#285943] stroke-white transition duration-300'
+                className='w-1/2 px-2 flex hover:cursor-pointer justify-center items-center shadow-lg rounded-md p-1 bg-[#285943] hover:bg-[#397F5F] hover:stroke-[#285943] stroke-white transition duration-300'
                 onClick={handleSubmit} 
                 type='submit'>
                     <p className='text-sm'>Submit</p>
@@ -99,13 +104,12 @@ const HardinessZoneSelector = () => {
                 animate={{ opacity: 1, y: 0 }} 
                 transition={{ duration: 0.0625 }} 
               >
-                  <p className='text-xs text-[#900000] text-center font-semibold'>Please enter a valid zip code.</p>
+                  <p className='text-xs text-[#900000] text-center font-thin'>Please enter a valid zip code.</p>
               </motion.div>}
           </div>
         </div>
       </PopoverContent>
     </Popover>
-    // <button><p className='self-center text-sm font-semibold text-black hover:underline'>Find Your Hardiness Zone</p></button>
   )
 }
 
