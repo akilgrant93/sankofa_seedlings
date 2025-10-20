@@ -50,7 +50,7 @@ const HardinessZoneSelector = () => {
                 setIsValid(false);
                 return;
             } else {
-                const zone = await fetchHardinessZone(zipCodeStr);
+                await fetchHardinessZone(zipCodeStr);
                 return
             }
       }

@@ -1,8 +1,6 @@
 "use client"
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { AnimatePresence } from "motion/react"
-import * as motion from "motion/react-client"
 import "@fontsource/passion-one"
 import HardinessZoneSelector from './HardinessZoneSelector'
 
