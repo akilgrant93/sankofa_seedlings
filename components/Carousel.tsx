@@ -10,6 +10,7 @@ import "@fontsource/passion-one"
 interface Props {
   products: Stripe.Product[];
 }
+//this will form the basis of a related products carousel in time
 
 export function shuffleArray<T>(array: T[]): T[] {
     let currentIndex = array.length, randomIndex;
