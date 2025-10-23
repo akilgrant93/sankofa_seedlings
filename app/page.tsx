@@ -10,11 +10,19 @@ export default async function Home() {
     expand: ['data.default_price'],
     limit: 20,
   })
+
+  function getRandomInt(min: number, max: number): number {
+    min = Math.ceil(min); // Ensure min is an integer
+    max = Math.floor(max); // Ensure max is an integer
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  const randomNum = getRandomInt(0,19)
   return (
      <div>
-      <section className="rounded bg-neutral-100 py-8 sm:py-12 mt-8">
-        <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 items-center justify-items-center gap-8 px-8 sm:px-16">
-          <div className="max-w-md">
+      <section className="rounded bg-neutral-100 pt-8 md:pt-0 md:py-8 sm:py-12 mt-8">
+        <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 items-center justify-items-center gap-8 sm:px-16">
+          <div className="max-w-md flex flex-col items-center px-8">
             <h2 className="text-3xl font-bold text-[#285943] tracking-tight md:text-4xl" style={{fontFamily: 'Passion One, sans-serif', fontWeight:500}}>Welcome to Sankofa Seedlings</h2>
             <p className="text-neutral-600">Our collection permaculture seeds and seedlings are perfect for setting your roots deep</p>
             <Button 
@@ -26,7 +34,9 @@ export default async function Home() {
               </Link>
             </Button>
           </div>
-          <Image className="w-[50vw]" alt='Hero Image' width={450} height={450} src={products.data[0].images[0]}/>
+          <Link href={`/products/${products.data[randomNum].id}`}>
+          <Image className="md:w-[50vw] w-full" alt='Hero Image' width={450} height={450} src={products.data[randomNum].images[0]}/>
+          </Link>
         </div>
       </section>
       <section className="py-8">
